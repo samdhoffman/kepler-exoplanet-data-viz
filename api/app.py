@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 import requests
 import pandas as pd
 import numpy as np
@@ -21,42 +21,54 @@ def initialize():
 
 @app.route('/star_types')
 def star_types():
-  counts = df["LABEL"].value_counts()
-  star_types = {"non-exoplanet": int(counts[1]), "exoplanet": int(counts[2])}
-  return star_types
+  try:
+    counts = df["LABEL"].value_counts()
+    star_types = {"non-exoplanet": int(counts[1]), "exoplanet": int(counts[2])}
+    return star_types
+  except Exception as e:
+    return not_found(str(e))
 
 @app.route('/stats')
 def stats():
-  labels = df.LABEL
-  stats_df = df.drop('LABEL', axis=1)
+  try:
+    labels = df.LABEL
+    stats_df = df.drop('LABEL', axis=1)
 
-  return {
-    "non-exoplanet": {
-      "mean": stats_df[labels==1].mean().mean().round(2),
-      "median": stats_df[labels==1].median(axis=1).median().round(2),
-      "max_val": stats_df[labels==1].max(axis=1).max().round(2),
-      "min_val": stats_df[labels==1].min(axis=1).min().round(2),
-    },
-    "exoplanet": {
-      "mean": stats_df[labels==2].mean().mean().round(2),
-      "median": stats_df[labels==2].median(axis=1).median().round(2),
-      "max_val": stats_df[labels==2].max(axis=1).max().round(2),
-      "min_val": stats_df[labels==2].min(axis=1).min().round(2),
-    },
-    "total": {
-      "mean": stats_df.mean().mean().round(2),
-      "median": stats_df.median(axis=1).median().round(2),
-      "max_val": stats_df.max(axis=1).max().round(2),
-      "min_val": stats_df.min(axis=1).max().round(2)
+    return {
+      "non-exoplanet": {
+        "mean": stats_df[labels==1].mean().mean().round(2),
+        "median": stats_df[labels==1].median(axis=1).median().round(2),
+        "max_val": stats_df[labels==1].max(axis=1).max().round(2),
+        "min_val": stats_df[labels==1].min(axis=1).min().round(2),
+      },
+      "exoplanet": {
+        "mean": stats_df[labels==2].mean().mean().round(2),
+        "median": stats_df[labels==2].median(axis=1).median().round(2),
+        "max_val": stats_df[labels==2].max(axis=1).max().round(2),
+        "min_val": stats_df[labels==2].min(axis=1).min().round(2),
+      },
+      "total": {
+        "mean": stats_df.mean().mean().round(2),
+        "median": stats_df.median(axis=1).median().round(2),
+        "max_val": stats_df.max(axis=1).max().round(2),
+        "min_val": stats_df.min(axis=1).max().round(2)
+      }
     }
-  }
+  except Exception as e:
+    return not_found(str(e))
 
 @app.route("/flux")
 def scatter():
-  # melted = df.melt(id_vars=['LABEL'], var_name='FLUX', value_name="LIGHT INTENSITY").head(100)
-  # return {"x": np.array(range(3197)).tolist(), "y": melted["LIGHT INTENSITY"].to_json(orient='values')}
-  return {
-    "flux_range": np.array(range(3197)).tolist(), 
-    "non-exoplanet": df[df["LABEL"]==1].iloc[1,1:].to_list(), 
-    "exoplanet": df[df["LABEL"]==2].iloc[1,1:].to_list()
-  }
+  try:
+    data = {
+      "flux_range": np.array(range(3197)).tolist(), 
+      "non-exoplanet": df[df["LABEL"]==1].iloc[1,1:].to_list(), 
+      "exoplanet": df[df["LABEL"]==2].iloc[1,1:].to_list()
+    }
+    return data
+  except Exception as e:
+    return not_found(str(e))
+
+@app.errorhandler(404)
+def not_found(exception):
+  return jsonify(error=exception),404
