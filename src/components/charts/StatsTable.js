@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col, Table } from 'react-bootstrap'
+import { Container, Row, Col, Table, Spinner } from 'react-bootstrap'
 import axios from 'axios';
 
 class StatsTable extends React.Component {
@@ -25,7 +25,8 @@ class StatsTable extends React.Component {
     return (
       <div className="StatsTable">
         {
-          this.state.stats &&
+          this.state.stats 
+          ?
           <Table striped bordered hover responsive size="sm">
             <thead>
               <tr>
@@ -60,6 +61,10 @@ class StatsTable extends React.Component {
               </tr>
             </tbody>
           </Table>
+          :
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
         }
       </div>
     )
