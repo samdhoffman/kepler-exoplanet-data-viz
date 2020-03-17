@@ -28,3 +28,29 @@ def star_types():
   counts = df["LABEL"].value_counts()
   star_types = {"non-exoplanet": int(counts[1]), "exoplanet": int(counts[2])}
   return star_types
+
+@app.route('/stats')
+def stats():
+  labels = df.LABEL
+  stats_df = df.drop('LABEL', axis=1)
+
+  return {
+    "non-exoplanet": {
+      "mean": stats_df[labels==1].mean().mean().round(2),
+      "median": stats_df[labels==1].median(axis=1).median().round(2),
+      "max_val": stats_df[labels==1].max(axis=1).max().round(2),
+      "min_val": stats_df[labels==1].min(axis=1).min().round(2),
+    },
+    "exoplanet": {
+      "mean": stats_df[labels==2].mean().mean().round(2),
+      "median": stats_df[labels==2].median(axis=1).median().round(2),
+      "max_val": stats_df[labels==2].max(axis=1).max().round(2),
+      "min_val": stats_df[labels==2].min(axis=1).min().round(2),
+    },
+    "total": {
+      "mean": stats_df.mean().mean().round(2),
+      "median": stats_df.median(axis=1).median().round(2),
+      "max_val": stats_df.max(axis=1).max().round(2),
+      "min_val": stats_df.min(axis=1).max().round(2)
+    }
+  }
