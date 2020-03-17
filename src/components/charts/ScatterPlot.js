@@ -68,7 +68,7 @@ class ScatterPlot extends React.Component{
             ]}
             layout={ 
               {
-                title: 'Star Distribution Over Time',
+                title: 'Star Intensity Distribution Over Time',
                 xaxis: {
                   title: "Flux Range"
                 },
