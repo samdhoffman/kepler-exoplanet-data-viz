@@ -22,6 +22,17 @@ function App() {
                 <ChartCarousel />
               </Col>
             </Row>
+            <Row>
+              <Col>
+                <p>
+                  The data for this project describes the change in flux (light intensity) of several thousand stars. 
+                  Each star has a binary label of 2 or 1, where 2 indicates that that the star is confirmed to have at least one exoplanet in orbit.
+                  If said star is watched over several months or years, there may be a regular 'dimming' of the flux. 
+                  This is evidence that there may be one or more orbiting bodies around the star.
+                  The charts featured on this page will help convey the distribution of the types of celestial objects, how bright they are, and how they change over time. 
+                </p>
+              </Col>
+            </Row>
           </Container>
         </ErrorBoundary>
       </Layout>
