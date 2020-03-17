@@ -1,33 +1,48 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import axios from 'axios';
 import Plot from 'react-plotly.js';
 
-export default function PieChart() {
-  const [starTypes, setStarTypes] = useState(null);
+class PieChart extends React.Component {
+  constructor(props) {
+    super(props)
 
-  useEffect(() => {
-    fetch('/star_types').then(res => res.json()).then(data => {
-      setStarTypes(data)
-    });
-  }, []);
+    this.state = {
+      starTypes: null
+    }
+  }
 
-  return (
-    <div className="PieChart">
-      {
-        starTypes && 
-        <Plot
-          data={[
-              {
-                type: 'pie', 
-                values: [starTypes["non-exoplanet"], starTypes["exoplanet"]],
-                labels: ['Non-Exoplanet', 'Exoplanet'],
-                marker: {
-                  colors: ['rgb(31, 119, 180)','gold']
+  componentDidMount() {
+    axios.get('/star_types')
+      .then(res => {
+        this.setState({starTypes: res.data})
+      })
+      .catch((error) => {
+        this.setState(() => { throw error; });
+      });
+  }
+
+  render() {
+    return (
+      <div className="PieChart">
+        {
+          this.state.starTypes && 
+          <Plot
+            data={[
+                {
+                  type: 'pie', 
+                  values: [this.state.starTypes["non-exoplanet"], this.state.starTypes["exoplanet"]],
+                  labels: ['Non-Exoplanet', 'Exoplanet'],
+                  marker: {
+                    colors: ['rgb(31, 119, 180)','gold']
+                  },
                 },
-              },
-            ]}
-            layout={ {width: 500, height: 500, title: 'Exoplanet Stars vs Non-Exoplanet Stars'} }
-        />
-      }
-    </div>
-  )
+              ]}
+              layout={ {width: 500, height: 500, title: 'Exoplanet Stars vs Non-Exoplanet Stars'} }
+          />
+        }
+      </div>
+    )
+  }
 }
+
+export default PieChart;
