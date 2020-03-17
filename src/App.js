@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.scss';
 
 import { Container, Row, Col, Nav, Navbar } from 'react-bootstrap'
+import PieChart from './components/charts/PieChart';
 
 function App() {
   // const [lightData, setLightData] = useState(null);
@@ -32,7 +33,7 @@ function App() {
             stats to go here
           </Col>
           <Col xs={12} sm={12} md={7} lg={8}>
-            chart slider to go here
+            <PieChart />
           </Col>
         </Row>
       </Container>
