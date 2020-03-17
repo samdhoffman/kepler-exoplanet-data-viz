@@ -1,49 +1,64 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import axios from 'axios';
 import Plot from 'react-plotly.js';
 
-export default function Histogram() {
-  const [fluxDist, setFluxDist] = useState(null);
+class Histogram extends React.Component {
+  constructor(props) {
+    super(props)
 
-  useEffect(() => {
-    fetch('/flux').then(res => res.json()).then(data => {
-      setFluxDist(data)
-    });
-  }, []);
+    this.state = {
+      fluxDist: null
+    }
+  }
 
-  return (
-    <div className="Histogram">
-      {
-        fluxDist &&
-        <Plot
-          data={[
-            {
-              x: fluxDist["non-exoplanet"],
-              type: 'histogram',
-              opacity: 0.5,
-              name: 'Non-Exoplanets'
-            },
-            {
-              x: fluxDist["exoplanet"],
-              type: 'histogram',
-              opacity: 0.6,
-              name: 'Exoplanets',
-              marker: {
-                color: 'gold',
+  componentDidMount() {
+    axios.get('/flux')
+      .then(res => {
+        this.setState({fluxDist: res.data})
+      })
+      .catch((error) => {
+        this.setState(() => { throw error; });
+      });
+  }
+
+  render() {
+    return (
+      <div className="Histogram">
+        {
+          this.state.fluxDist &&
+          <Plot
+            data={[
+              {
+                x: this.state.fluxDist["non-exoplanet"],
+                type: 'histogram',
+                opacity: 0.5,
+                name: 'Non-Exoplanets'
               },
-            }
-          ]}
-          layout={ 
-            {
-              width: 600, height: 500, 
-              title: 'Light Intensity Histogram', 
-              barmode: "overlay",
-              xaxis: {
-                title: "Light Intensity"
+              {
+                x: this.state.fluxDist["exoplanet"],
+                type: 'histogram',
+                opacity: 0.6,
+                name: 'Exoplanets',
+                marker: {
+                  color: 'gold',
+                },
               }
-            } 
-          }
-        />
-      }
-    </div>
-  )
+            ]}
+            layout={ 
+              {
+                width: 600, height: 500, 
+                title: 'Light Intensity Histogram', 
+                barmode: "overlay",
+                xaxis: {
+                  title: "Light Intensity"
+                }
+              } 
+            }
+          />
+        }
+      </div>
+    )
+  }
 }
+
+export default Histogram;
