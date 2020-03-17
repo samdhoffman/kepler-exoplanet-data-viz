@@ -4,6 +4,7 @@ import './App.scss';
 
 import { Container, Row, Col, Nav, Navbar } from 'react-bootstrap'
 import PieChart from './components/charts/PieChart';
+import StatsTable from './components/charts/StatsTable';
 
 function App() {
   // const [lightData, setLightData] = useState(null);
@@ -30,7 +31,7 @@ function App() {
       <Container>
         <Row>
           <Col xs={12} sm={12} md={5} lg={4} className="stats-container">
-            stats to go here
+            <StatsTable />
           </Col>
           <Col xs={12} sm={12} md={7} lg={8}>
             <PieChart />
