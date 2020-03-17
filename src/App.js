@@ -3,8 +3,8 @@ import logo from './logo.svg';
 import './App.scss';
 
 import { Container, Row, Col, Nav, Navbar } from 'react-bootstrap'
-import PieChart from './components/charts/PieChart';
 import StatsTable from './components/charts/StatsTable';
+import ChartCarousel from './components/charts/ChartCarousel';
 
 function App() {
   // const [lightData, setLightData] = useState(null);
@@ -34,7 +34,7 @@ function App() {
             <StatsTable />
           </Col>
           <Col xs={12} sm={12} md={7} lg={8}>
-            <PieChart />
+            <ChartCarousel />
           </Col>
         </Row>
       </Container>
