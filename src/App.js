@@ -9,14 +9,6 @@ import Layout from './components/layout/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
-  // const [lightData, setLightData] = useState(null);
-  // useEffect(() => {
-  //   fetch('/hi').then(res => res.json()).then(data => {
-  //     setLightData(data)
-  //   });
-  // }, []);
-
-
   return (
     <div className="App">
       <Layout>
