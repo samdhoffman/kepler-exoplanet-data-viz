@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react'
 import './ChartCarousel.scss';
 import Glide from '@glidejs/glide'
 import PieChart from './PieChart'
+import ScatterPlot from './ScatterPlot'
+import Histogram from './Histogram'
 
 export default function ChartCarousel() {
   const glide = new Glide('.glide', { 
     type: 'slider',
-    // autoplay: 1000,
+    autoplay: 7000,
   });
 
   useEffect(() => {
@@ -19,6 +21,8 @@ export default function ChartCarousel() {
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">
             <li className="glide__slide"><PieChart /></li>
+            <li className="glide__slide"><ScatterPlot /></li>
+            <li className="glide__slide"><Histogram /></li>
           </ul>
         </div>
 
