@@ -19,7 +19,10 @@ export default function PieChart() {
               {
                 type: 'pie', 
                 values: [starTypes["non-exoplanet"], starTypes["exoplanet"]],
-                labels: ['Non-Exoplanet', 'Exoplanet']
+                labels: ['Non-Exoplanet', 'Exoplanet'],
+                marker: {
+                  colors: ['rgb(31, 119, 180)','gold']
+                },
               },
             ]}
             layout={ {width: 500, height: 500, title: 'Exoplanet Stars vs Non-Exoplanet Stars'} }
