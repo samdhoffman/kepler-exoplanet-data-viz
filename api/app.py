@@ -10,12 +10,8 @@ DRIVE_URL = 'https://drive.google.com/file/d/1jRI6Kn16CGhAeYAlaXEeFKQ1rF1TydlO/v
 
 @app.before_first_request
 def initialize():
-  # read csv here
   global df
-  # df = pd.read_csv('/Users/sam/Downloads/kepler_time_series.csv').head(1000)
-  # download_file_from_google_drive(DRIVE_URL, './kepler_data/kepler_data.csv')
-  # df = pd.read_csv('./kepler_data/kepler_data.csv').head(100)
-  df = pd.read_csv('/Users/sam/Downloads/kepler_time_series.csv').head(1000)
+  df = pd.read_csv('/Users/sam/Downloads/kepler_time_series.csv')
   print(df)
   print("initializing")
 
