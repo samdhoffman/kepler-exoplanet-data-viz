@@ -51,6 +51,9 @@ class Histogram extends React.Component {
                 barmode: "overlay",
                 xaxis: {
                   title: "Light Intensity"
+                },
+                yaxis: {
+                  title: "Star Count"
                 }
               } 
             }
