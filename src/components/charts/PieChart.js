@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios';
 import Plot from 'react-plotly.js';
+import { Spinner } from 'react-bootstrap'
 
 class PieChart extends React.Component {
   constructor(props) {
@@ -25,7 +26,8 @@ class PieChart extends React.Component {
     return (
       <div className="PieChart">
         {
-          this.state.starTypes && 
+          this.state.starTypes 
+          ? 
           <Plot
             data={[
                 {
@@ -39,6 +41,11 @@ class PieChart extends React.Component {
               ]}
               layout={ {width: 500, height: 500, title: 'Exoplanet Stars vs Non-Exoplanet Stars'} }
           />
+          :
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+
         }
       </div>
     )
