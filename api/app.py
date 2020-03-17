@@ -1,6 +1,7 @@
 from flask import Flask
 import requests
 import pandas as pd
+import numpy as np
 
 app = Flask(__name__)
 
@@ -17,11 +18,6 @@ def initialize():
   df = pd.read_csv('/Users/sam/Downloads/kepler_time_series.csv').head(1000)
   print(df)
   print("initializing")
-
-@app.route('/hi')
-def hello_world():
-  data = "Hello, world!"
-  return {"hi": "hi"}
 
 @app.route('/star_types')
 def star_types():
@@ -53,4 +49,14 @@ def stats():
       "max_val": stats_df.max(axis=1).max().round(2),
       "min_val": stats_df.min(axis=1).max().round(2)
     }
+  }
+
+@app.route("/flux")
+def scatter():
+  # melted = df.melt(id_vars=['LABEL'], var_name='FLUX', value_name="LIGHT INTENSITY").head(100)
+  # return {"x": np.array(range(3197)).tolist(), "y": melted["LIGHT INTENSITY"].to_json(orient='values')}
+  return {
+    "flux_range": np.array(range(3197)).tolist(), 
+    "non-exoplanet": df[df["LABEL"]==1].iloc[1,1:].to_list(), 
+    "exoplanet": df[df["LABEL"]==2].iloc[1,1:].to_list()
   }
